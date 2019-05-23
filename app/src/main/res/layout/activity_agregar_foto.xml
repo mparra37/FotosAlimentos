@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AgregarFotoActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_hora"
+            android:text="15:30"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/blanco"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            />
+
+        <ImageView
+            android:id="@+id/iv_foto"
+            android:src="@drawable/meal"
+            android:layout_weight="10"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp" />
+
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_weight="2"
+            android:layout_height="0dp">
+
+            <Button
+            android:id="@+id/btn_tomar_foto"
+            android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="5dp"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/blanco"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tomar Foto"/>
+
+            <Button
+                android:id="@+id/btn_subir_foto"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/blanco"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Subir Foto"/>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_desc"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:ems="10"
+            android:hint="Descripción... (opcional)"
+            android:gravity="start|top"
+            android:inputType="textMultiLine" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <Button
+                android:id="@+id/btn_cancelar_foto"
+                android:layout_width="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/primaryTextColor"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="bottom"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cancelar"/>
+
+            <Button
+                android:id="@+id/btn_guardar_foto"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/primaryTextColor"
+                android:layout_gravity="bottom"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Guardar"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

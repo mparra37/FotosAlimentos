@@ -40,6 +40,9 @@ public class AgregarFotoActivity extends AppCompatActivity {
     ImageView iv_foto;
     File imagen_file;
     EditText et_desc;
+    Bitmap bitmap;
+    private boolean tomo_foto = false;
+    private boolean subio_foto = false;
 
 
     @Override
@@ -80,25 +83,56 @@ public class AgregarFotoActivity extends AppCompatActivity {
 
     }
 
-    private void guardar(){
-        String desc = et_desc.getText().toString();
+    public void cancelar(View v){
+        if (tomo_foto){
+            String nombreImg = nombre_archivo + ".jpg";
+            imagen_file = new File(ubicacionCarpeta(), nombreImg);
+            if (imagen_file.exists()){
+                imagen_file.delete();
+            }
+        }
+    }
 
-        if (!desc.isEmpty()) {
-//            val archivo = File(ubicacion(),titulo+".txt")
-//            val fos = FileOutputStream(archivo)
-//            fos.write(cuerpo.toByteArray())
-//            fos.close()
-            try{
-                File archivo = new File(ubicacionCarpeta(), nombre_archivo+".txt");
-                FileOutputStream fos = new FileOutputStream(archivo);
-                fos.write(desc.getBytes());
-                fos.close();
-                Toast.makeText(this,"Se guardó el archivo", Toast.LENGTH_SHORT).show();
-            }catch(Exception e){
-                Toast.makeText(this,"Error al guardar el archivo", Toast.LENGTH_SHORT).show();
+    private void guardar(){
+
+        if(tomo_foto || subio_foto){
+            String desc = et_desc.getText().toString();
+
+
+
+            if (subio_foto && bitmap!= null){
+                Toast.makeText(this,"guardando...espere un poco", Toast.LENGTH_LONG).show();
+                try {
+                    File imagen = new File(ubicacionCarpeta(), nombre_archivo + ".jpg");
+                    FileOutputStream out = new FileOutputStream(imagen);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+                    // PNG is a lossless format, the compression factor (100) is ignored
+                    Toast.makeText(this,"Se guardó la imagen", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(this,"No se pudo guardar la imagen", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+            if (!desc.isEmpty()) {
+                try{
+                    File archivo = new File(ubicacionCarpeta(), nombre_archivo+".txt");
+                    FileOutputStream fos = new FileOutputStream(archivo);
+                    fos.write(desc.getBytes());
+                    fos.close();
+                    //Toast.makeText(this,"Se guardó el archivo", Toast.LENGTH_SHORT).show();
+                }catch(Exception e){
+                    Toast.makeText(this,"Error al guardar la descripción", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
+
+
+        }else{
+            Toast.makeText(this,"Agregar una fotografía", Toast.LENGTH_SHORT).show();
         }
+
+
     }
 
     private void estableceFecha(Date fecha){
@@ -197,18 +231,18 @@ public class AgregarFotoActivity extends AppCompatActivity {
                          grantResults[1] == PackageManager.PERMISSION_GRANTED ){
                      tomar_foto();
                  }else{
-                     Toast.makeText(this,"Permisos negados", Toast.LENGTH_SHORT).show();
+                     Toast.makeText(this,"Permisos denegados", Toast.LENGTH_SHORT).show();
                  };
              case CODIGO_SELECCION:if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED ){
                      subir_foto();
                  }else{
-                     Toast.makeText(this,"Permisos negados", Toast.LENGTH_SHORT).show();
+                     Toast.makeText(this,"Permisos denegados", Toast.LENGTH_SHORT).show();
                  };
 
              case CODIGO_GUARDAR:if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED ){
                  guardar();
              }else{
-                 Toast.makeText(this,"Permisos negados", Toast.LENGTH_SHORT).show();
+                 Toast.makeText(this,"Permisos denegados", Toast.LENGTH_SHORT).show();
              };
          }
     }
@@ -221,6 +255,8 @@ public class AgregarFotoActivity extends AppCompatActivity {
             case CODIGO_CAMARA: if(resultCode == Activity.RESULT_OK){
                 //iv_foto.setImageURI(img_uri);
                 verificaRotacion(null);
+                tomo_foto = true;
+                subio_foto = false;
             }
 
             case CODIGO_SELECCION: if(resultCode == Activity.RESULT_OK && data != null){
@@ -243,10 +279,12 @@ public class AgregarFotoActivity extends AppCompatActivity {
                  cursor.close();
 
                 BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                Bitmap bitmap = BitmapFactory.decodeFile(path,bmOptions);
+                bitmap = BitmapFactory.decodeFile(path,bmOptions);
                  verificaRotacion(bitmap);
-                 //iv_foto.setImageBitmap(BitmapFactory.decodeFile(path));
+                // iv_foto.setImageBitmap(bitmap);
 
+                subio_foto = true;
+                tomo_foto = false;
             }
         }
     }

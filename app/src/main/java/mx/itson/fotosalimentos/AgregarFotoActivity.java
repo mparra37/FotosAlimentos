@@ -19,10 +19,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -31,11 +33,13 @@ public class AgregarFotoActivity extends AppCompatActivity {
 
     private final int CODIGO_CAMARA = 123;
     private final int CODIGO_SELECCION = 234;
+    private final int CODIGO_GUARDAR = 345;
     Button  btn_hora;
     String fecha_str, nombre_archivo;
     Uri img_uri;
     ImageView iv_foto;
     File imagen_file;
+    EditText et_desc;
 
 
     @Override
@@ -45,10 +49,56 @@ public class AgregarFotoActivity extends AppCompatActivity {
 
         iv_foto = findViewById(R.id.iv_foto);
         btn_hora = findViewById(R.id.btn_hora);
+        et_desc = findViewById(R.id.et_desc);
 
         Date fecha = new Date();
         estableceFecha(fecha);
 
+    }
+
+    public void permisos_guardar(View v){
+
+            //Verifica los permisos
+            //A partir de la versión de Android de Marshmallow
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if(checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ||
+                        checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                    //no tiene los permisos
+                    String[] permisos = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+                    //muestra ventana para pedir los permisos al usuario
+                    requestPermissions(permisos, CODIGO_GUARDAR);
+                }else{
+                    //tiene los permisos
+                    guardar();
+                }
+            }else{
+                //No es necesario pedir los permisos directamente
+                guardar();
+            }
+
+
+    }
+
+    private void guardar(){
+        String desc = et_desc.getText().toString();
+
+        if (!desc.isEmpty()) {
+//            val archivo = File(ubicacion(),titulo+".txt")
+//            val fos = FileOutputStream(archivo)
+//            fos.write(cuerpo.toByteArray())
+//            fos.close()
+            try{
+                File archivo = new File(ubicacionCarpeta(), nombre_archivo+".txt");
+                FileOutputStream fos = new FileOutputStream(archivo);
+                fos.write(desc.getBytes());
+                fos.close();
+                Toast.makeText(this,"Se guardó el archivo", Toast.LENGTH_SHORT).show();
+            }catch(Exception e){
+                Toast.makeText(this,"Error al guardar el archivo", Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 
     private void estableceFecha(Date fecha){
@@ -131,8 +181,11 @@ public class AgregarFotoActivity extends AppCompatActivity {
         if (!carpeta.exists()){
             carpeta.mkdir();
         }
-
-        return carpeta.getAbsolutePath();
+        File dia = new File(carpeta, fecha_str);
+        if(!dia.exists()){
+            dia.mkdir();
+        }
+        return dia.getAbsolutePath();
     }
 
     @Override
@@ -147,7 +200,13 @@ public class AgregarFotoActivity extends AppCompatActivity {
                      Toast.makeText(this,"Permisos negados", Toast.LENGTH_SHORT).show();
                  };
              case CODIGO_SELECCION:if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED ){
-                 subir_foto();
+                     subir_foto();
+                 }else{
+                     Toast.makeText(this,"Permisos negados", Toast.LENGTH_SHORT).show();
+                 };
+
+             case CODIGO_GUARDAR:if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED ){
+                 guardar();
              }else{
                  Toast.makeText(this,"Permisos negados", Toast.LENGTH_SHORT).show();
              };

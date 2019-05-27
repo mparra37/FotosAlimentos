@@ -119,7 +119,7 @@ public class AgregarFotoActivity extends AppCompatActivity {
                     FileOutputStream fos = new FileOutputStream(archivo);
                     fos.write(desc.getBytes());
                     fos.close();
-                    //Toast.makeText(this,"Se guardó el archivo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"Se guardó el archivo", Toast.LENGTH_SHORT).show();
                 }catch(Exception e){
                     Toast.makeText(this,"Error al guardar la descripción", Toast.LENGTH_SHORT).show();
                 }

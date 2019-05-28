@@ -37,6 +37,8 @@
                     android:layout_weight="1"
                     android:layout_height="match_parent" />
 
+
+
                 <ImageView
                     android:id="@+id/btn_eliminar_foto"
                     android:layout_width="0dp"

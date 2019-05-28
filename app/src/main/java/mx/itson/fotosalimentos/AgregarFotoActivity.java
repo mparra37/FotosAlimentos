@@ -57,6 +57,13 @@ public class AgregarFotoActivity extends AppCompatActivity {
         Date fecha = new Date();
         estableceFecha(fecha);
 
+        Bundle bundle = getIntent().getExtras();
+
+        if (bundle != null){
+            fecha_str = bundle.getString("fecha");
+
+        }
+
     }
 
     public void permisos_guardar(View v){
@@ -91,8 +98,21 @@ public class AgregarFotoActivity extends AppCompatActivity {
                 imagen_file.delete();
             }
         }
+        finish();
     }
 
+    @Override
+    public void onBackPressed() {
+//        moveTaskToBack(true);
+        if (tomo_foto){
+            String nombreImg = nombre_archivo + ".jpg";
+            imagen_file = new File(ubicacionCarpeta(), nombreImg);
+            if (imagen_file.exists()){
+                imagen_file.delete();
+            }
+        }
+        finish();
+    }
     private void guardar(){
 
         if(tomo_foto || subio_foto){
@@ -126,7 +146,7 @@ public class AgregarFotoActivity extends AppCompatActivity {
 
             }
 
-
+            finish();
 
         }else{
             Toast.makeText(this,"Agregar una fotografía", Toast.LENGTH_SHORT).show();
@@ -233,17 +253,19 @@ public class AgregarFotoActivity extends AppCompatActivity {
                  }else{
                      Toast.makeText(this,"Permisos denegados", Toast.LENGTH_SHORT).show();
                  };
+                break;
              case CODIGO_SELECCION:if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED ){
                      subir_foto();
                  }else{
                      Toast.makeText(this,"Permisos denegados", Toast.LENGTH_SHORT).show();
                  };
-
+                break;
              case CODIGO_GUARDAR:if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED ){
                  guardar();
              }else{
                  Toast.makeText(this,"Permisos denegados", Toast.LENGTH_SHORT).show();
              };
+             break;
          }
     }
 

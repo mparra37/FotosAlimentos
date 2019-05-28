@@ -1,48 +1,51 @@
 package mx.itson.fotosalimentos;
 
+import android.graphics.Bitmap;
+
 import java.util.Objects;
 
 public class Alimento {
-    private int id;
-    private int imagen;
-    private String hora;
+//    private int id;
+    private Bitmap imagen;
+//    private int imagen;
+    private String nombre;
     private String descripcion;
-    private String fecha;
+    private String path;
 
     public Alimento(){
 
     }
 
-    public Alimento(int id, int imagen, String hora, String descripcion, String fecha){
-        this.id = id;
+    public Alimento( Bitmap imagen, String nombre, String descripcion, String path){
+//        this.id = id;
         this.imagen = imagen;
-        this.hora = hora;
+        this.nombre = nombre;
         this.descripcion = descripcion;
-        this.fecha = fecha;
+        this.path = path;
     }
 
-    public int getId() {
-        return id;
-    }
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getImagen() {
+    public Bitmap getImagen() {
         return imagen;
     }
 
-    public void setImagen(int imagen) {
+    public void setImagen(Bitmap imagen) {
         this.imagen = imagen;
     }
 
-    public String getHora() {
-        return hora;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setHora(String hora) {
-        this.hora = hora;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getDescripcion() {
@@ -53,35 +56,35 @@ public class Alimento {
         this.descripcion = descripcion;
     }
 
-    public String getFecha() {
-        return fecha;
+    public String getPath() {
+        return path;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setPath(String path) {
+        this.path = path;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Alimento alimento = (Alimento) o;
-        return id == alimento.id;
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Alimento alimento = (Alimento) o;
+//        return id == alimento.id;
+//    }
 
 //    @Override
 //    public int hashCode() {
 //        return Objects.hash(id);
 //    }
 
-    @Override
-    public String toString() {
-        return "Alimento{" +
-                "id=" + id +
-                ", imagen=" + imagen +
-                ", hora='" + hora + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", fecha='" + fecha + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Alimento{" +
+//                "id=" + id +
+////                ", imagen=" + imagen +
+//                ", hora='" + hora + '\'' +
+//                ", descripcion='" + descripcion + '\'' +
+//                ", fecha='" + fecha + '\'' +
+//                '}';
+//    }
 }

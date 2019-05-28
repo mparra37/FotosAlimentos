@@ -1,12 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".PrincipalActivity"
     tools:showIn="@layout/activity_principal">
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/btn_fecha_izq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="fecha_izq"
+            android:src="@drawable/ic_chevron_left_black_24dp"/>
+
+
+        <TextView
+            android:id="@+id/tv_fecha"
+            android:textColor="@color/secondaryTextColor"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="20dp"
+            android:text="DD/MM/AAAA"/>
+
+        <ImageView
+
+
+            android:id="@+id/btn_fecha_der"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="fecha_der"
+            android:src="@drawable/ic_chevron_right_black_24dp"/>
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listview"
@@ -15,4 +52,4 @@
 
     </ListView>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
